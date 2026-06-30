@@ -37,10 +37,10 @@ sudo apt install ros-noetic-robot-localization ros-noetic-teleop-twist-keyboard
 
 ```bash
 cd ~/catkin_ws/src
-git clone https://github.com/SEU_USUARIO/lar_fusao_ekf.git
+git clone https://github.com/HenriqueNTeixeira/fusao-ekf-husky-lar.git
 # o lar_gazebo deve estar no mesmo src
 cd ~/catkin_ws
-catkin_make            # ou catkin build
+catkin build
 source devel/setup.bash
 ```
 

@@ -10,7 +10,7 @@
     Avaliacao Individual - Parte 2 - Localizacao Robotica PPGEEC/UFBA.
   </description>
 
-  <maintainer email="voce@ufba.br">Seu Nome</maintainer>
+  <maintainer email="henrique.teixeira@ufba.br">Henrique Nunes Teixeira</maintainer>
   <license>BSD</license>
 
   <buildtool_depend>catkin</buildtool_depend>
