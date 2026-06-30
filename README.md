@@ -234,14 +234,6 @@ do GPS fornece correção absoluta de posição, mantendo o erro limitado ao lon
 de todo o trajeto (RMSE de 0.007 m e erro final de 0.006 m), sem crescimento
 com o tempo.
 
-Decisões de projeto: foi utilizado um único EKF (ekf_localization_node) com
-world_frame = odom nas três configurações. Na configuração com GPS, a saída do
-navsat_transform_node (/gps/odom) entra como uma fonte de posição absoluta
-(x, y). O setup canônico do robot_localization para GPS emprega dois filtros
-(um local em odom e um global em map) mais o navsat_transform; para o objetivo
-deste trabalho — comparar o ganho incremental de cada sensor — um único EKF é
-suficiente e evita quebrar a árvore de TF (odom->base_link) ao desabilitar o
-EKF interno do Husky.
 
 Limitações: os três experimentos foram conduzidos por teleoperação ao vivo,
 buscando reproduzir um trajeto semelhante em cada execução, porém não idêntico.
