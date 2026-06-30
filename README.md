@@ -232,4 +232,23 @@ IMU corrige drasticamente a estimativa de yaw (de ~52 para ~0.07 graus) e, por
 consequência, reduz a deriva de posição (RMSE de 1.16 para 0.43 m). A inclusão
 do GPS fornece correção absoluta de posição, mantendo o erro limitado ao longo
 de todo o trajeto (RMSE de 0.007 m e erro final de 0.006 m), sem crescimento
-com o tempo. Gráficos completos em resultados/comparacao/.
+com o tempo.
+
+Decisões de projeto: foi utilizado um único EKF (ekf_localization_node) com
+world_frame = odom nas três configurações. Na configuração com GPS, a saída do
+navsat_transform_node (/gps/odom) entra como uma fonte de posição absoluta
+(x, y). O setup canônico do robot_localization para GPS emprega dois filtros
+(um local em odom e um global em map) mais o navsat_transform; para o objetivo
+deste trabalho — comparar o ganho incremental de cada sensor — um único EKF é
+suficiente e evita quebrar a árvore de TF (odom->base_link) ao desabilitar o
+EKF interno do Husky.
+
+Limitações: os três experimentos foram conduzidos por teleoperação ao vivo,
+buscando reproduzir um trajeto semelhante em cada execução, porém não idêntico.
+A pequena variação de física da simulação (escorregamento de roda, timing)
+torna inviável repetir o trajeto exato em malha aberta. Por isso a comparação
+deve ser lida como qualitativa entre as configurações: cada execução é avaliada
+contra o seu próprio /gt/odom, registrado simultaneamente, o que mantém a
+métrica de erro válida para cada caso. As trajetórias estimadas e o erro ao
+longo do tempo estão em resultados/comparacao/.
+
