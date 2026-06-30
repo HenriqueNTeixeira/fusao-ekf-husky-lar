@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!-- Configuracao 1: APENAS ODOMETRIA -->
+<launch>
+  <!-- Topicos REAIS publicados pela simulacao do Husky.
+       VERIFIQUE com 'rostopic list' e ajuste se necessario. -->
+  <arg name="raw_odom" default="/wheel/odom"/>
+
+  <!-- EKF (robot_localization) -->
+  <node pkg="robot_localization" type="ekf_localization_node"
+        name="ekf_filter_node" clear_params="true" output="screen">
+    <rosparam command="load"
+              file="$(find lar_fusao_ekf)/config/ekf_odom.yaml"/>
+    <!-- redireciona a entrada /wheel/odom para o topico real do sim -->
+    <remap from="/wheel/odom" to="$(arg raw_odom)"/>
+  </node>
+
+  <!-- Ground truth -->
+  <node pkg="lar_fusao_ekf" type="gt_odom.py" name="gt_odom"
+        output="screen"/>
+
+  <!-- Avaliacao -->
+  <node pkg="lar_fusao_ekf" type="fusion_error.py" name="fusion_error"
+        output="screen">
+    <param name="config_name" value="odom"/>
+  </node>
+</launch>

@@ -1,0 +1,32 @@
+# =====================================================================
+# Configuracao 1: APENAS ODOMETRIA
+# robot_localization / ekf_localization_node
+# IMPORTANTE: este YAML e carregado DENTRO do <node name="ekf_filter_node">,
+# entao os parametros ficam no nivel raiz (SEM a chave 'ekf_filter_node:'),
+# senao o ROS aninha duas vezes e o filtro nao le a config.
+# =====================================================================
+frequency: 30.0
+sensor_timeout: 0.1
+two_d_mode: true            # robo de chao -> filtra so x, y, yaw
+
+map_frame: map
+odom_frame: odom
+base_link_frame: base_link
+world_frame: odom           # sem GPS, world = odom (localizacao continua)
+
+publish_tf: true
+print_diagnostics: true
+
+# ---- odom0 = odometria das rodas (/wheel/odom) ----
+# vetor _config:
+# [x, y, z,  roll, pitch, yaw,  vx, vy, vz,  vroll, vpitch, vyaw,  ax, ay, az]
+# da odometria usamos as VELOCIDADES (vx, vyaw); a posicao vem do filtro.
+odom0: /wheel/odom
+odom0_config: [false, false, false,
+               false, false, false,
+               true,  true,  false,
+               false, false, true,
+               false, false, false]
+odom0_differential: false
+odom0_relative: false
+odom0_queue_size: 10

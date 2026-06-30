@@ -1,0 +1,55 @@
+# =====================================================================
+# Configuracao 3: ODOMETRIA + IMU + GPS
+# Usamos um UNICO EKF, entao world_frame = odom (igual as configs 1 e 2)
+# e o GPS entra como fonte de posicao ABSOLUTA (odom1, x/y).
+# Obs.: o setup "de manual" para GPS usa dois EKFs (um local em odom e um
+# global em map) + navsat_transform. Para esta comparacao um EKF basta,
+# e evita quebrar a TF (odom->base_link) ao matar o EKF interno do Husky.
+# Parametros no nivel raiz (carregado dentro do <node name="ekf_filter_node">).
+# =====================================================================
+frequency: 30.0
+sensor_timeout: 0.1
+two_d_mode: true
+
+map_frame: map
+odom_frame: odom
+base_link_frame: base_link
+world_frame: odom           # EKF unico -> mantem odom (GPS entra como odom1)
+
+publish_tf: true
+print_diagnostics: true
+
+# ---- odom0 = odometria das rodas (velocidades) ----
+odom0: /wheel/odom
+odom0_config: [false, false, false,
+               false, false, false,
+               true,  true,  false,
+               false, false, true,
+               false, false, false]
+odom0_differential: false
+odom0_relative: false
+odom0_queue_size: 10
+
+# ---- imu0 = IMU ----
+imu0: /imu/data
+imu0_config: [false, false, false,
+              false, false, true,
+              false, false, false,
+              false, false, true,
+              true,  false, false]
+imu0_differential: false
+imu0_relative: false
+imu0_queue_size: 10
+imu0_remove_gravitational_acceleration: true
+
+# ---- odom1 = GPS convertido para x/y (/gps/odom) ----
+# do GPS usamos a POSICAO absoluta (x, y).
+odom1: /gps/odom
+odom1_config: [true,  true,  false,
+               false, false, false,
+               false, false, false,
+               false, false, false,
+               false, false, false]
+odom1_differential: false
+odom1_relative: false
+odom1_queue_size: 10

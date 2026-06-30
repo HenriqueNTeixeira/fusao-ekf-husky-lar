@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>lar_fusao_ekf</name>
+  <version>1.0.0</version>
+  <description>
+    Fusao sensorial com Filtro de Kalman Estendido (EKF) no ambiente
+    simulado do LAR/UFBA com o Clearpath Husky. Compara tres
+    configuracoes de localizacao (odometria; odometria+IMU;
+    odometria+IMU+GPS) contra o ground truth do Gazebo.
+    Avaliacao Individual - Parte 2 - Localizacao Robotica PPGEEC/UFBA.
+  </description>
+
+  <maintainer email="voce@ufba.br">Seu Nome</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>robot_localization</exec_depend>
+
+  <export>
+  </export>
+</package>

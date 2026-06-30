@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- Configuracao 2: ODOMETRIA + IMU -->
+<launch>
+  <arg name="raw_odom" default="/wheel/odom"/>
+  <arg name="raw_imu"  default="/imu/data"/>
+
+  <node pkg="robot_localization" type="ekf_localization_node"
+        name="ekf_filter_node" clear_params="true" output="screen">
+    <rosparam command="load"
+              file="$(find lar_fusao_ekf)/config/ekf_odom_imu.yaml"/>
+    <remap from="/wheel/odom" to="$(arg raw_odom)"/>
+    <remap from="/imu/data"   to="$(arg raw_imu)"/>
+  </node>
+
+  <node pkg="lar_fusao_ekf" type="gt_odom.py" name="gt_odom"
+        output="screen"/>
+
+  <node pkg="lar_fusao_ekf" type="fusion_error.py" name="fusion_error"
+        output="screen">
+    <param name="config_name" value="odom_imu"/>
+  </node>
+</launch>
